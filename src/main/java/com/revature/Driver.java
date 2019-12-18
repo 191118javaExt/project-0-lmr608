@@ -23,7 +23,7 @@ public class Driver {
 			case 1:
 				CustomerDAO c1 = new CustomerDAOImpl();
 				c1.checkCustomer();
-				break;	
+				break;
 			case 2:
 				CustomerDAO c2 = new CustomerDAOImpl();
 				c2.createCustomer();
