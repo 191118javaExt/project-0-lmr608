@@ -1,5 +1,6 @@
 package com.revature;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.revature.repositories.CustomerDAO;
@@ -13,12 +14,11 @@ public class Driver {
 		Scanner s = new Scanner(System.in);
 		int selection = 0;
 		while(selection != 4) {
-			System.out.println("Welcome!" + "\n" + "Main menu: " + "\n" + "1. Login" 
-			+ "\n" + "2. Register" + "\n" + "3. Employees" + "\n" + "4. Quit");
-			System.out.print("Enter selection: ");
-			
+			System.out.println("Welcome!" + "\n" + "\n" + "Main menu: " + "\n" + "\n" + "1. Login" 
+			+ "\n" + "2. Register" + "\n" + "3. Employees" + "\n" + "4. Quit" + "\n" + "\n" + "Enter selection: ");
+
 			selection = s.nextInt();
-			
+
 			switch(selection) {
 			case 1:
 				CustomerDAO c1 = new CustomerDAOImpl();

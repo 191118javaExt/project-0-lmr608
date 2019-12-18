@@ -8,6 +8,7 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.revature.models.Customer;
@@ -67,6 +68,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		}
 		System.out.println("Customer account has been created.");
 		System.out.println();
+		s.close();
 	}
 
 	public void deleteCustomer() {
@@ -117,7 +119,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void checkCustomer() {
 		Scanner s = new Scanner(System.in);
 		System.out.print("Enter username: ");
-		String username = s.next();
+		String username;
+		username = s.next();
 
 		System.out.print("Enter password: ");
 		String password = s.next();
@@ -208,6 +211,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 				break;  
 			}
 		}
+		s.close();
 	}
 }		
 
