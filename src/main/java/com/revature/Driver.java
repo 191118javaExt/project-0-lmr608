@@ -1,42 +1,54 @@
 package com.revature;
 
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.revature.repositories.CustomerDAO;
 import com.revature.repositories.CustomerDAOImpl;
-import com.revature.repositories.EmployeeDAO;
-import com.revature.repositories.EmployeeDAOImpl;
 
 public class Driver {
-
+    
 	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		int selection = 0;
-		while(selection != 4) {
-			System.out.println("Welcome!" + "\n" + "\n" + "Main menu: " + "\n" + "\n" + "1. Login" 
-			+ "\n" + "2. Register" + "\n" + "3. Employees" + "\n" + "4. Quit" + "\n" + "\n" + "Enter selection: ");
-
-			selection = s.nextInt();
-
-			switch(selection) {
+    
+		Scanner main = new Scanner(System.in);
+		int selection;
+		boolean quit = false;
+		
+		do {
+			System.out.println("Welcome to Eagle Bank!\n");
+			System.out.println("Main Menu:\n");
+			System.out.println("1. Register");
+			System.out.println("2. Login");
+			System.out.println("3. Employee Login");
+			System.out.println("0. Quit");
+			System.out.println("\nEnter Selection: ");
+			
+			try {
+			
+			selection = main.nextInt();
+			
+			switch (selection) {
 			case 1:
-				CustomerDAO c1 = new CustomerDAOImpl();
-				c1.checkCustomer();
+				// Register method
+				CustomerDAO newCustomer = new CustomerDAOImpl();
+				newCustomer.createCustomer();
 				break;
 			case 2:
-				CustomerDAO c2 = new CustomerDAOImpl();
-				c2.createCustomer();
+				// Login method
+				CustomerDAO existingCustomer = new CustomerDAOImpl();
+				existingCustomer.login();
 				break;
 			case 3:
-				EmployeeDAO c3 = new EmployeeDAOImpl();
-				c3.checkEmployee();
+				// Employee login method with admin verification using boolean
 				break;
-			case 4:
-				System.out.println("Goodbye!");
+			case 0:
+				quit = true;
 				break;
+			default:
+				System.out.println("Invalid selection.");
 			}
-		}
-		s.close();
-	}
+			} catch (Exception e) {
+			}
+		} while (!quit);
+		System.out.println("Goodbye!");
+    }
 }

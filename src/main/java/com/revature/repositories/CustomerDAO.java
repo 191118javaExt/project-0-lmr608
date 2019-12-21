@@ -8,8 +8,9 @@ public interface CustomerDAO {
 
 	public List<Customer> getAllCustomers();
 	public void createCustomer();
-	public void deleteCustomer();
 	public void viewCustomer();
-	public void checkCustomer();
+	public void updateCustomer();
+	public void deleteCustomer();
+	public void login();
 	
 }

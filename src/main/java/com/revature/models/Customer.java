@@ -7,22 +7,19 @@ public class Customer {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private String phone;
 	private String email;
 
 	public Customer () {
 		super();
 	}
 
-	public Customer(int id, String username, String password, String firstName, String lastName, String phone,
-			String email) {
+	public Customer(int id, String username, String password, String firstName, String lastName, String email) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.phone = phone;
 		this.email = email;
 	}
 
@@ -66,14 +63,6 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -91,7 +80,6 @@ public class Customer {
 		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -127,11 +115,6 @@ public class Customer {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (phone == null) {
-			if (other.phone != null)
-				return false;
-		} else if (!phone.equals(other.phone))
-			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -143,6 +126,6 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", phone=" + phone + ", email=" + email + "]";
+				+ ", lastName=" + lastName + ", email=" + email + "]";
 	}
 }

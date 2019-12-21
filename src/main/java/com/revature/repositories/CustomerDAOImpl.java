@@ -11,15 +11,17 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.revature.models.Customer;
 import com.revature.utilities.ConnectionUtil;
 
 public class CustomerDAOImpl implements CustomerDAO {
+	
 	public List<Customer> getAllCustomers() {
-		
-		List<Customer> c1 = new ArrayList<>();
+		List<Customer> customerList = new ArrayList<>();
 		try(Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM TABLE customer";
+			String sql = "SELECT * FROM customer";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -28,74 +30,52 @@ public class CustomerDAOImpl implements CustomerDAO {
 				String password = rs.getString("password");
 				String firstName = rs.getString("first_name");
 				String lastName = rs.getString("last_name");
-				String phone = rs.getString("phone");
 				String email = rs.getString("email");
-				c1.add(new Customer(id, username, password, firstName, lastName, phone, email));
+				customerList.add(new Customer(id, username, password, firstName, lastName, email));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		return c1;
+		} catch (NullPointerException e) {
+		}
+		return customerList;
 	}
 
 	public void createCustomer( ) {
-		Scanner s = new Scanner(System.in);
-		System.out.print("Create username: ");
-		String username = s.next();
-		System.out.print("Create password: ");
-		String password = s.next();
-		System.out.print("First name: ");
-		String firstName = s.next();
-		System.out.print("Last name: ");
-		String lastName = s.next();
-		System.out.print("Phone: ");
-		String phone = s.next();
+		Scanner createCustomer = new Scanner(System.in);
+		System.out.print("Create Username: ");
+		String username = createCustomer.next();
+		System.out.print("Create Password: ");
+		String password = createCustomer.next();
+		System.out.print("First Name: ");
+		String firstName = createCustomer.next();
+		System.out.print("Last Name: ");
+		String lastName = createCustomer.next();
 		System.out.print("Email: ");
-		String email = s.next();
+		String email = createCustomer.next();
 
-		try (Connection con = ConnectionUtil.getConnection()) {
-			String sql = "INSERT INTO TABLE customer (username, password, first_name, last_name, phone, email) VALUES (?, ?, ?, ?, ?, ?)";
-			PreparedStatement pstmt = con.prepareStatement(sql);
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "INSERT INTO customer (username, password, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
 			pstmt.setString(3, firstName);
 			pstmt.setString(4, lastName);
-			pstmt.setString(5, phone);
-			pstmt.setString(6, email);
+			pstmt.setString(5, email);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		System.out.println("Customer account has been created.");
-		System.out.println();
-		s.close();
+		login();
 	}
-
-	public void deleteCustomer() {
-		Scanner s = new Scanner(System.in);
-		System.out.print("Enter Customer ID you want to delete: ");
-		String c2 = s.next();
-		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "DELETE FROM TABLE customer WHERE customer_id = ?";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, c2);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Customer has been deleted.");
-		System.out.println();
-	}
-
+	
 	public void viewCustomer() {
-		Scanner s = new Scanner(System.in);
+		Scanner viewCustomer = new Scanner(System.in);
 		System.out.println("Enter Customer ID to view account: ");
 		int id = 0;
-		id = s.nextInt();
+		id = viewCustomer.nextInt();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			Customer c3  = null;
-			String sql = "SELECT * FROM TABLE customer WHERE customer_id = ?";
+			Customer customer  = null;
+			String sql = "SELECT * FROM customer WHERE customer_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
@@ -105,28 +85,43 @@ public class CustomerDAOImpl implements CustomerDAO {
 				String password = rs.getString("password");
 				String first_name = rs.getString("first_name");
 				String last_name = rs.getString("last_name");
-				String phone = rs.getString("phone");
 				String email = rs.getString("email");
-				c3 = new Customer(customer_id, username, password, first_name, last_name, phone, email);
-				System.out.println(c3);				
+				customer = new Customer(customer_id, username, password, first_name, last_name, email);
+				System.out.println(customer);				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-		s.close();
+	}
+
+	public void updateCustomer() {
+		
 	}
 	
-	public void checkCustomer() {
-		Scanner s = new Scanner(System.in);
-		System.out.print("Enter username: ");
-		String username;
-		username = s.next();
-
-		System.out.print("Enter password: ");
-		String password = s.next();
+	public void deleteCustomer() {
+		Scanner deleteCustomer = new Scanner(System.in);
+		System.out.print("Enter Customer ID you want to delete: ");
+		String customer = deleteCustomer.next();
+		
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "DELETE FROM TABLE customer WHERE customer_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, customer);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+		}
+		System.out.println("Customer has been deleted.");
+		System.out.println();
+	}
+	
+	public void login() {
+		Scanner login = new Scanner(System.in);
+		System.out.print("Enter your username: ");
+		String username = login.next();
+		System.out.print("Enter your password: ");
+		String password = login.next();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM TABLE customer WHERE username = ? AND password = ?";
+			String sql = "SELECT * FROM customer WHERE username = ? AND password = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
@@ -139,25 +134,22 @@ public class CustomerDAOImpl implements CustomerDAO {
 				} 
 			} else {
 				System.out.println("Welcome " + username + ".");
-				System.out.println();
-				giveUserOptions();
+				customerMenu();
 			}
 		} catch (SQLException e) {
-		} catch(NullPointerException e) {
+			System.out.println(e);
 		}
-		s.close();
 	}
 
 	public void tryAgain() {
-		Scanner s = new Scanner(System.in);
+		Scanner tryAgain = new Scanner(System.in);
 		System.out.print("Enter username: ");
-		String username = s.next();
-
+		String username = tryAgain.next();
 		System.out.print("Enter password: ");
-		String password = s.next();
+		String password = tryAgain.next();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM TABLE customer WHERE username = ? AND password = ?";
+			String sql = "SELECT * FROM customer WHERE username = ? AND password = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
@@ -170,48 +162,51 @@ public class CustomerDAOImpl implements CustomerDAO {
 				} 
 			} else {
 				System.out.println("Welcome " + username + ".");
-				System.out.println();
-				giveUserOptions();
+				customerMenu();
 			}
-		} catch (SQLException e) {
-		} catch(NullPointerException e) {
+		} catch (SQLException e) {		
 		}
-		s.close();
 	}
 	
-	public void giveUserOptions() {
-		Scanner s = new Scanner(System.in);
-		int selection = 0;
-		while(selection != 4) {
-			System.out.println("Bank menu: " + "\n" + "1. View account" + "\n" + "2. Create account" + "\n" + 
-			"3. Delete account " + "\n" + "4. Deposit/Withdraw" + "\n" + "5. Main menu");
-			System.out.print("Enter selection: ");
-			selection = s.nextInt();
+	public void customerMenu() {
+		Scanner customerMenu = new Scanner(System.in);
+		int selection = -1;
+		while(selection != 0) {
+			System.out.println("Bank Menu:\n");
+			System.out.println("1. View Account");
+			System.out.println("2. Create Account");
+			System.out.println("3. Delete Account");
+			System.out.println("4. Deposit");
+			System.out.println("5. Withdraw");
+			System.out.println("6. Transfer");
+			System.out.println("0. Main Menu");
+			System.out.println("\nEnter selection: ");
+			
+			selection = customerMenu.nextInt();
+			
 			switch(selection) {
 			case 1:
 				viewAccount();
-				System.out.println();
 				break;
 			case 2:
 				createAccount();
-				System.out.println();
 				break;
 			case 3:
 				deleteAccount();
-				System.out.println();
 				break;
 			case 4:
 				deposit();
-				System.out.println("Deposit/Withdraw");
-				System.out.println();
 				break;
-			case 5: 
-				System.out.println("Main menu");
-				System.out.println();
-				break;  
+			case 5:
+				withdraw();
+				break;
+			case 6:
+				transfer();
+				break;
+			case 0:
+				
+				break;
 			}
 		}
-		s.close();
 	}
-}		
-
+}
