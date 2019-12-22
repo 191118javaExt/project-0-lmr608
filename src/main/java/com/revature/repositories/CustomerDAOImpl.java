@@ -195,18 +195,20 @@ public class CustomerDAOImpl implements CustomerDAO {
 			case 3:
 				deleteAccount();
 				break;
-			/*case 4:
+			case 4:
 				deposit();
 				break;
 			case 5:
 				withdraw();
 				break;
-			case 6:
+			/*case 6:
 				transfer();
 				break;
 			case 0:
-				
+				mainMenu();
 				break;*/
+			default:
+			 	System.out.println("Invalid Selection.");
 			}
 		}
 	}
@@ -264,5 +266,47 @@ public class CustomerDAOImpl implements CustomerDAO {
 		} catch (SQLException e) {
 		}
 		System.out.println("User has been deleted.");
+	}
+	
+	public void deposit() {
+		System.out.println("Enter Account ID: ");
+		Scanner deposit = new Scanner(System.in);
+		int id = 0;
+		id = deposit.nextInt();
+		
+		System.out.println("Deposit Amount: ");
+		double amount;
+		amount = deposit.nextDouble();
+		
+		try (Connection conn = ConnectionUtil.getConnection()) {
+		String sql = "UPDATE project0.account SET balance += ?, WHERE account_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setDouble(1, amount);
+			pstmt.setInt(2, id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+		}
+		System.out.println("User has deposited " + amount + ".");
+	}
+	
+	public void withdraw() {
+		System.out.println("Enter Account ID: ");
+		Scanner withdraw = new Scanner(System.in);
+		int id = 0;
+		id = withdraw.nextInt();
+		
+		System.out.println("Withdraw Amount: ");
+		double amount;
+		amount = withdraw.nextDouble();
+		
+		try (Connection conn = ConnectionUtil.getConnection()) {
+		String sql = "UPDATE project0.account SET balance -= ?, WHERE account_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setDouble(1, amount);
+			pstmt.setInt(2, id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+		}
+		System.out.println("User has withdrawn " + amount + ".");
 	}
 }

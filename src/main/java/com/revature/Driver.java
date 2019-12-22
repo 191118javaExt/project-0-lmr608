@@ -14,13 +14,26 @@ public class Driver {
 		boolean quit = false;
 		
 		do {
-			System.out.println("Welcome to Eagle Bank!\n");
-			System.out.println("Main Menu:\n");
-			System.out.println("1. Register");
-			System.out.println("2. Login");
-			System.out.println("3. Employee Login");
-			System.out.println("0. Quit");
-			System.out.println("\nEnter Selection: ");
+			System.out.println("	       Welcome to Eagle Bank!\n\n"
+					+ "         _._._                       _._._\r\n" + 
+					"        _|   |_                     _|   |_\r\n" + 
+					"        | ... |_._._._._._._._._._._| ... |\r\n" + 
+					"        | ||| |  o EAGLE    BANK o  | ||| |\r\n" + 
+					"        | \"\"\" |  \"\"\"    \"\"\"    \"\"\"  | \"\"\" |\r\n" + 
+					"   ())  |[-|-]| [-|-]  [-|-]  [-|-] |[-|-]|  ())\r\n" + 
+					"  (())) |     |---------------------|     | (()))\r\n" + 
+					" (())())| \"\"\" |  \"\"\"    \"\"\"    \"\"\"  | \"\"\" |(())())\r\n" + 
+					" (()))()|[-|-]|  :::   .-\"-.   :::  |[-|-]|(()))()\r\n" + 
+					" ()))(()|     | |~|~|  |_|_|  |~|~| |     |()))(()\r\n" + 
+					"    ||  |_____|_|_|_|__|_|_|__|_|_|_|_____|  ||\r\n" + 
+					" ~ ~^^ @@@@@@@@@@@@@@/=======\\@@@@@@@@@@@@@@ ^^~ ~\r\n" + 
+					"      ^~^~                                ~^~^");
+			System.out.println("		     Main Menu:\n");
+			System.out.println("		     1. Register");
+			System.out.println("		     2. Login");
+			System.out.println("		     3. Employee Login");
+			System.out.println("		     0. Quit");
+			System.out.println("\n		     Enter Selection: ");
 			
 			try {
 			
