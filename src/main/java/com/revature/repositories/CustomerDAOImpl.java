@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.utilities.ConnectionUtil;
 
@@ -121,7 +122,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		String password = login.next();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM customer WHERE username = ? AND password = ?";
+			String sql = "SELECT * FROM project0.customer WHERE username = ? AND password = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
@@ -194,7 +195,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			case 3:
 				deleteAccount();
 				break;
-			case 4:
+			/*case 4:
 				deposit();
 				break;
 			case 5:
@@ -205,8 +206,63 @@ public class CustomerDAOImpl implements CustomerDAO {
 				break;
 			case 0:
 				
-				break;
+				break;*/
 			}
 		}
+	}
+	
+	public void viewAccount() {
+		
+		Scanner viewAccount = new Scanner(System.in);
+		System.out.println("Enter Account ID to view account: ");
+		int id = 0;
+		id = viewAccount.nextInt();
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			Account account  = null;
+			String sql = "SELECT * FROM project0.account WHERE account_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int account_id = rs.getInt("account_id");
+				account = new Account(id, balance, approved);
+				System.out.println(account);				
+			}
+		} catch (SQLException e) {
+		}
+	}
+	
+	public void createAccount() {
+		Scanner createAccount = new Scanner(System.in);
+		System.out.print("Enter User ID: ");
+		int id = 0;
+		id = createAccount.nextInt();
+		System.out.println("Enter Starting Balance: ");
+		double balance;
+		balance = createAccount.nextDouble();
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "INSERT INTO project0.account (user_id, balance) VALUES (?,?)";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			pstmt.setDouble(2, balance);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+		}
+		System.out.println("Account created!");
+	}
+	
+	public void deleteAccount() {
+		Scanner deleteAccount = new Scanner(System.in);
+		System.out.print("Enter Username to Delete: ");
+		String username = deleteAccount.next();
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "DELETE FROM project0.account WHERE username = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, username);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+		}
+		System.out.println("User has been deleted.");
 	}
 }

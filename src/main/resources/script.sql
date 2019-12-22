@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS employee CASCADE;
+DROP TABLE IF EXISTS employee;
 
 create table employee (
 	employee_id SERIAL PRIMARY KEY,
@@ -9,7 +9,7 @@ create table employee (
 	admin BOOLEAN NOT NULL
 );
 
-DROP TABLE IF EXISTS customer CASCADE;
+DROP TABLE IF EXISTS customer;
 
 create table customer (
 	customer_id SERIAL PRIMARY KEY,
@@ -20,7 +20,7 @@ create table customer (
 	email VARCHAR (100) UNIQUE
 );
 
-DROP TABLE IF EXISTS account CASCADE;
+DROP TABLE IF EXISTS account;
 
 CREATE TABLE account (
 	account_id SERIAL PRIMARY KEY,
@@ -48,7 +48,7 @@ VALUES (1, 100, FALSE);
 INSERT INTO account (customer_id, balance, approved)
 VALUES (2, 10000, TRUE);
 INSERT INTO account (customer_id, balance, approved)
-VALUES (3, 10000, TRUE);
+VALUES (3, 1000000, TRUE);
 
 SELECT * FROM employee;
 SELECT * FROM customer;

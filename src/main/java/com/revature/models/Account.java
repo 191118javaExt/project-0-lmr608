@@ -2,9 +2,9 @@ package com.revature.models;
 
 public class Account {
 
-	private int id;
-	private double balance;
-	boolean approved;
+	public int id;
+	public double balance;
+	public boolean approved;
 	
 	public Account() {
 		super();
