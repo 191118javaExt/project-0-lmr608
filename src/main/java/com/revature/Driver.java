@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import com.revature.repositories.CustomerDAO;
 import com.revature.repositories.CustomerDAOImpl;
+import com.revature.repositories.EmployeeDAO;
+import com.revature.repositories.EmployeeDAOImpl;
 
 public class Driver {
     
@@ -14,11 +16,11 @@ public class Driver {
 		boolean quit = false;
 		
 		do {
-			System.out.println("	       Welcome to Eagle Bank!\n\n"
+			System.out.println("	       Welcome to Larry Bank!\n\n"
 					+ "         _._._                       _._._\r\n" + 
 					"        _|   |_                     _|   |_\r\n" + 
 					"        | ... |_._._._._._._._._._._| ... |\r\n" + 
-					"        | ||| |  o EAGLE    BANK o  | ||| |\r\n" + 
+					"        | ||| |  o LARRY    BANK o  | ||| |\r\n" + 
 					"        | \"\"\" |  \"\"\"    \"\"\"    \"\"\"  | \"\"\" |\r\n" + 
 					"   ())  |[-|-]| [-|-]  [-|-]  [-|-] |[-|-]|  ())\r\n" + 
 					"  (())) |     |---------------------|     | (()))\r\n" + 
@@ -52,6 +54,8 @@ public class Driver {
 				break;
 			case 3:
 				// Employee login method with admin verification using boolean
+				EmployeeDAO employee = new EmployeeDAOImpl();
+				employee.employeeLogin();
 				break;
 			case 0:
 				quit = true;

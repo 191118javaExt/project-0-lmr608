@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.services.MainMenu;
 import com.revature.utilities.ConnectionUtil;
 
 public class CustomerDAOImpl implements CustomerDAO {
@@ -42,19 +43,19 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	public void createCustomer( ) {
 		Scanner createCustomer = new Scanner(System.in);
-		System.out.print("Create Username: ");
+		System.out.print("		     Create Username: ");
 		String username = createCustomer.next();
-		System.out.print("Create Password: ");
+		System.out.print("		     Create Password: ");
 		String password = createCustomer.next();
-		System.out.print("First Name: ");
+		System.out.print("		     First Name: ");
 		String firstName = createCustomer.next();
-		System.out.print("Last Name: ");
+		System.out.print("		     Last Name: ");
 		String lastName = createCustomer.next();
-		System.out.print("Email: ");
+		System.out.print("		     Email: ");
 		String email = createCustomer.next();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "INSERT INTO customer (username, password, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO customer (username, password, first_name, last_name, email) " + "VALUES (?, ?, ?, ?, ?);";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
@@ -64,13 +65,13 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 		}
-		System.out.println("Customer account has been created.");
+		System.out.println("		     Customer account has been created.");
 		login();
 	}
 	
 	public void viewCustomer() {
 		Scanner viewCustomer = new Scanner(System.in);
-		System.out.println("Enter Customer ID to view account: ");
+		System.out.println("		     Enter Customer ID to view account: ");
 		int id = 0;
 		id = viewCustomer.nextInt();
 
@@ -100,7 +101,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	
 	public void deleteCustomer() {
 		Scanner deleteCustomer = new Scanner(System.in);
-		System.out.print("Enter Customer ID you want to delete: ");
+		System.out.print("		     Enter Customer ID you want to delete: ");
 		String customer = deleteCustomer.next();
 		
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -110,15 +111,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 		}
-		System.out.println("Customer has been deleted.");
+		System.out.println("		     Customer has been deleted.");
 		System.out.println();
 	}
 	
 	public void login() {
 		Scanner login = new Scanner(System.in);
-		System.out.print("Enter your username: ");
+		System.out.print("		     Enter Username: ");
 		String username = login.next();
-		System.out.print("Enter your password: ");
+		System.out.print("		     Enter Password: ");
 		String password = login.next();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -130,11 +131,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 			int i = 1;
 			if(!rs.next()) {
 				while(i > 0 ) {
-					System.out.println("Wrong username or password. Try again.");
+					System.out.println("		     Wrong username or password.\n		     Try again.");
 					tryAgain(); i--;
 				} 
 			} else {
-				System.out.println("Welcome " + username + ".");
+				System.out.println("		     Welcome " + username + ".");
 				customerMenu();
 			}
 		} catch (SQLException e) {
@@ -144,9 +145,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	public void tryAgain() {
 		Scanner tryAgain = new Scanner(System.in);
-		System.out.print("Enter username: ");
+		System.out.print("		     Enter Username: ");
 		String username = tryAgain.next();
-		System.out.print("Enter password: ");
+		System.out.print("		     Enter Password: ");
 		String password = tryAgain.next();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -158,11 +159,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 			int i = 1;
 			if(!rs.next()) {
 				while(i > 0 ) {
-					System.out.println("Wrong username or password. Try again.");
+					System.out.println("		     Wrong username or password.\n		     Try again.");
 					tryAgain(); i--;
 				} 
 			} else {
-				System.out.println("Welcome " + username + ".");
+				System.out.println("		     Welcome " + username + ".");
 				customerMenu();
 			}
 		} catch (SQLException e) {		
@@ -173,15 +174,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Scanner customerMenu = new Scanner(System.in);
 		int selection = -1;
 		while(selection != 0) {
-			System.out.println("Bank Menu:\n");
-			System.out.println("1. View Account");
-			System.out.println("2. Create Account");
-			System.out.println("3. Delete Account");
-			System.out.println("4. Deposit");
-			System.out.println("5. Withdraw");
-			System.out.println("6. Transfer");
-			System.out.println("0. Main Menu");
-			System.out.println("\nEnter selection: ");
+			System.out.println("		     Bank Menu:\n");
+			System.out.println("		     1. View Account");
+			System.out.println("		     2. Create Account");
+			System.out.println("		     3. Delete Account");
+			System.out.println("		     4. Deposit");
+			System.out.println("		     5. Withdraw");
+			System.out.println("		     6. Transfer");
+			System.out.println("		     0. Main Menu");
+			System.out.println("\n		     Enter selection: ");
 			
 			selection = customerMenu.nextInt();
 			
@@ -201,14 +202,14 @@ public class CustomerDAOImpl implements CustomerDAO {
 			case 5:
 				withdraw();
 				break;
-			/*case 6:
+			case 6:
 				transfer();
 				break;
 			case 0:
-				mainMenu();
-				break;*/
+				//MainMenu();
+				break;
 			default:
-			 	System.out.println("Invalid Selection.");
+			 	System.out.println("		     Invalid Selection.");
 			}
 		}
 	}
@@ -216,7 +217,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void viewAccount() {
 		
 		Scanner viewAccount = new Scanner(System.in);
-		System.out.println("Enter Account ID to view account: ");
+		System.out.println("		     Enter Account ID to view account: ");
 		int id = 0;
 		id = viewAccount.nextInt();
 
@@ -237,10 +238,10 @@ public class CustomerDAOImpl implements CustomerDAO {
 	
 	public void createAccount() {
 		Scanner createAccount = new Scanner(System.in);
-		System.out.print("Enter User ID: ");
+		System.out.print("		     Enter User ID: ");
 		int id = 0;
 		id = createAccount.nextInt();
-		System.out.println("Enter Starting Balance: ");
+		System.out.println("		     Enter Starting Balance: ");
 		double balance;
 		balance = createAccount.nextDouble();
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -251,12 +252,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 		}
-		System.out.println("Account created!");
+		System.out.println("		     Account created!");
 	}
 	
 	public void deleteAccount() {
 		Scanner deleteAccount = new Scanner(System.in);
-		System.out.print("Enter Username to Delete: ");
+		System.out.print("		     Enter Username to Delete: ");
 		String username = deleteAccount.next();
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			String sql = "DELETE FROM project0.account WHERE username = ?";
@@ -265,16 +266,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 		}
-		System.out.println("User has been deleted.");
+		System.out.println("		     User has been deleted.");
 	}
 	
 	public void deposit() {
-		System.out.println("Enter Account ID: ");
+		System.out.println("		     Enter Account ID: ");
 		Scanner deposit = new Scanner(System.in);
 		int id = 0;
 		id = deposit.nextInt();
 		
-		System.out.println("Deposit Amount: ");
+		System.out.println("		     Deposit Amount: ");
 		double amount;
 		amount = deposit.nextDouble();
 		
@@ -286,16 +287,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 		}
-		System.out.println("User has deposited " + amount + ".");
+		System.out.println("		     " + id + " has deposited " + amount + ".");
 	}
 	
 	public void withdraw() {
-		System.out.println("Enter Account ID: ");
+		System.out.println("		     Enter Account ID: ");
 		Scanner withdraw = new Scanner(System.in);
 		int id = 0;
 		id = withdraw.nextInt();
 		
-		System.out.println("Withdraw Amount: ");
+		System.out.println("		     Withdraw Amount: ");
 		double amount;
 		amount = withdraw.nextDouble();
 		
@@ -307,6 +308,36 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 		}
-		System.out.println("User has withdrawn " + amount + ".");
+		System.out.println("		     " + id + " has withdrawn " + amount + ".");
+	}
+	
+	public void transfer() {
+		System.out.println("		     Enter Account ID to Transfer from: ");
+		Scanner transfer = new Scanner(System.in);
+		int id = 0;
+		id = transfer.nextInt();
+		
+		System.out.println("		     Enter Account ID to Transfer to: ");
+		id = transfer.nextInt();
+		
+		System.out.println("		     Transfer Amount: ");
+		double amount;
+		amount = transfer.nextDouble();
+		
+		try (Connection conn = ConnectionUtil.getConnection()) {
+		String sql = "UPDATE project0.account SET balance -= ?, WHERE account_id = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setDouble(1, amount);
+			pstmt.setInt(2, id);
+			pstmt.executeUpdate();
+			
+			String sql2 = "UPDATE project0.account SET balance += ?, WHERE account_id = ?";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setDouble(1, amount);
+			pstmt2.setInt(2, id);
+			pstmt2.executeUpdate();
+		} catch (SQLException e) {
+		}
+		System.out.println("		     Transfer complete.");
 	}
 }
