@@ -2,15 +2,21 @@ package com.revature;
 
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.revature.repositories.CustomerDAO;
 import com.revature.repositories.CustomerDAOImpl;
 import com.revature.repositories.EmployeeDAO;
 import com.revature.repositories.EmployeeDAOImpl;
 
 public class Driver {
+	
+	private static final Logger log = Logger.getLogger(Driver.class);
     
 	public static void main(String[] args) {
     
+		log.info("PROGRAM START");
+		
 		Scanner main = new Scanner(System.in);
 		int selection;
 		boolean quit = false;
@@ -67,5 +73,6 @@ public class Driver {
 			}
 		} while (!quit);
 		System.out.println("Goodbye!");
+		log.info("PROGRAM END");
     }
 }

@@ -118,3 +118,8 @@ java.sql.SQLException: No suitable driver found for postgresql://localhost:5432/
 	at com.revature.utilities.ConnectionUtil.getConnection(ConnectionUtil.java:21)
 	at com.revature.repositories.CustomerDAOImpl.login(CustomerDAOImpl.java:123)
 	at com.revature.Driver.main(Driver.java:38)
+2019-12-23 03:16:15 INFO  Driver:18 - PROGRAM START
+2019-12-23 03:16:29 WARN  Driver:50 - WARNING: SQLException occurred.
+2019-12-23 03:16:48 WARN  Driver:50 - WARNING: SQLException occurred.
+2019-12-23 03:17:13 WARN  Driver:186 - WARNING: SQLException occurred.
+2019-12-23 03:20:18 INFO  Driver:18 - PROGRAM START

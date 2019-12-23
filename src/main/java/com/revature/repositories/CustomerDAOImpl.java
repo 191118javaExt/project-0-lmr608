@@ -13,12 +13,15 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import com.revature.Driver;
 import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.services.MainMenu;
 import com.revature.utilities.ConnectionUtil;
 
 public class CustomerDAOImpl implements CustomerDAO {
+	
+	private static final Logger log = Logger.getLogger(Driver.class);
 	
 	public List<Customer> getAllCustomers() {
 		List<Customer> customerList = new ArrayList<>();
@@ -36,7 +39,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 				customerList.add(new Customer(id, username, password, firstName, lastName, email));
 			}
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
 		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		return customerList;
 	}
@@ -64,6 +69,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.setString(5, email);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		System.out.println("		     Customer account has been created.");
 		login();
@@ -92,6 +100,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 				System.out.println(customer);				
 			}
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 	}
 
@@ -110,6 +121,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.setString(1, customer);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		System.out.println("		     Customer has been deleted.");
 		System.out.println();
@@ -139,7 +153,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 				customerMenu();
 			}
 		} catch (SQLException e) {
-			System.out.println(e);
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 	}
 
@@ -166,7 +182,10 @@ public class CustomerDAOImpl implements CustomerDAO {
 				System.out.println("		     Welcome " + username + ".");
 				customerMenu();
 			}
-		} catch (SQLException e) {		
+		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 	}
 	
@@ -233,6 +252,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 				System.out.println(account);				
 			}
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 	}
 	
@@ -251,8 +273,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.setDouble(2, balance);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		System.out.println("		     Account created!");
+		log.info("Account created.");
 	}
 	
 	public void deleteAccount() {
@@ -265,8 +291,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.setString(1, username);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		System.out.println("		     User has been deleted.");
+		log.info("Account deleted.")
 	}
 	
 	public void deposit() {
@@ -286,8 +316,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.setInt(2, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		System.out.println("		     " + id + " has deposited " + amount + ".");
+		log.info("Deposit successful.");
 	}
 	
 	public void withdraw() {
@@ -307,8 +341,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt.setInt(2, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		System.out.println("		     " + id + " has withdrawn " + amount + ".");
+		log.info("Withdraw successful.");
 	}
 	
 	public void transfer() {
@@ -337,7 +375,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 			pstmt2.setInt(2, id);
 			pstmt2.executeUpdate();
 		} catch (SQLException e) {
+			log.warn("WARNING: SQLException occurred.");
+		} catch (NullPointerException e) {
+			log.warn("WARNING: NullPointerException occurred.");
 		}
 		System.out.println("		     Transfer complete.");
+		log.info("Transfer successful."));
 	}
 }
